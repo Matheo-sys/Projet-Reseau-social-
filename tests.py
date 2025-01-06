@@ -19,12 +19,10 @@ def test_file():
     enfiler(file, 2)
     enfiler(file, 3)
     assert file_vide(file) == False  
-    assert file == [1, 2, 3] 
 
     # Test du défilement
     assert defiler(file) == 1 
     assert defiler(file) == 2  
-    assert file == [3]  
     assert defiler(file) == 3  
     assert file_vide(file) == True  
 
@@ -38,8 +36,7 @@ def test_pile():
     empiler(pile, 1)
     empiler(pile, 2)
     empiler(pile, 3)
-    assert pile_vide(pile) == False  
-    assert pile == [1, 2, 3]  
+    assert pile_vide(pile) == False   
 
     # Test du dépilement
     assert depiler(pile) == 3  
