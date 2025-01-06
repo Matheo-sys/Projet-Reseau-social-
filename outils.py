@@ -1,3 +1,4 @@
+#outils de file
 def nouvelle_file():
     return list()
 
@@ -10,6 +11,7 @@ def defiler(f):
 def file_vide(f): 
     return len(f) == 0
 
+#outils de pile
 def nouvelle_pile():
     return list()
 
