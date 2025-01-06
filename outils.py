@@ -137,3 +137,15 @@ def generer_matrice(sommets, arcs_ou_aretes, orienté):
             matrice[j][i] = 1  # Graphe non orienté, ajout dans les deux sens
     return matrice
 
+def generer_liste(sommets, arcs_ou_aretes, orienté):
+    """
+    Génère la liste d'adjacence pour un graphe, orienté ou non.
+    """
+    liste_adj = {sommet: [] for sommet in sommets}
+    for arc in arcs_ou_aretes:
+        i = sommets.index(arc[0])
+        j = sommets.index(arc[1])
+        liste_adj[sommets[i]].append(sommets[j])
+        if not orienté:
+            liste_adj[sommets[j]].append(sommets[i])  # Graphe non orienté, ajout dans les deux sens
+    return liste_adj
