@@ -112,3 +112,13 @@ def charger_graphe(fichier_texte, representation='matrice'):
     else:
         raise ValueError("Type de graphe non valide. Choisissez 'GRAPHE ORIENTE' ou 'GRAPHE NON ORIENTE'.")
 
+def generer_graphe(sommets, arcs_ou_aretes, representation, orienté):
+    """
+    Génère la représentation en fonction du type de graphe et de la représentation mémoire choisie (matrice ou liste).
+    """
+    if representation == 'matrice':
+        return sommets, generer_matrice(sommets, arcs_ou_aretes, orienté)
+    elif representation == 'liste':
+        return sommets, generer_liste(sommets, arcs_ou_aretes, orienté)
+    else:
+        raise ValueError("Représentation non valide. Choisissez 'matrice' ou 'liste'.")
