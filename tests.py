@@ -8,7 +8,8 @@ from outils import (
     depiler,
     pile_vide,
 )
-from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste
+from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe, generer_graphe, generer_liste, generer_matrice
+
 import graphe
 
 def test_file():
@@ -122,3 +123,46 @@ def test_nombre_d_arcs_liste(liste_adjacence):
 # Appel du test
 test_nombre_d_arcs_liste(graphe.Adj)
 print("Test pour la fonction nombre_d_arcs_liste réussi.")
+
+def test_charger_graphe(fichier_test):
+    """
+    Teste la fonction charger_graphe avec un fichier donné.
+
+    :param fichier_test: Chemin du fichier de description du graphe.
+    """
+    print(f"Test du fichier : {fichier_test}")
+
+    # Test de la représentation en matrice
+    sommets, matrice = charger_graphe(fichier_test, representation='matrice')
+    print("Représentation en matrice d'adjacence :")
+    print("Sommets :", sommets)
+    print("Matrice :", matrice)
+
+    # Validation basique pour la matrice d'adjacence
+    assert len(sommets) == len(matrice), "Le nombre de sommets et la taille de la matrice ne correspondent pas."
+
+    for i in range(len(matrice)):
+        assert len(matrice[i]) == len(matrice), "La matrice doit être carrée."
+
+    # Test de la représentation en liste d'adjacence
+    sommets, liste_adj = charger_graphe(fichier_test, representation='liste')
+    print("Représentation en liste d'adjacence :")
+    print("Sommets :", sommets)
+    print("Liste d'adjacence :", liste_adj)
+
+    # Validation basique pour la liste d'adjacence
+    assert len(sommets) == len(liste_adj), "Le nombre de sommets et la taille de la liste d'adjacence ne correspondent pas."
+
+    for sommet in liste_adj:
+        assert sommet in sommets, f"Le sommet {sommet} dans la liste d'adjacence n'existe pas dans la liste des sommets."
+
+    print("Tous les tests sont passés avec succès.")
+
+# Demande le fichier de test directement lorsque le script est exécuté
+fichier_test = input("Entrez le chemin du fichier de graphe : ")
+try:
+    test_charger_graphe(fichier_test)
+except FileNotFoundError:
+    print(f"Erreur : Le fichier '{fichier_test}' n'existe pas.")
+except Exception as e:
+    print(f"Erreur lors de l'exécution du test : {e}")
