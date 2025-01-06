@@ -56,8 +56,8 @@ def nombre_aretes_liste(liste_adjacence):
     return nombre
 
 
-print(nombre_aretes_matrice(graphe.Mat))
-print(nombre_aretes_liste(graphe.Adj))
+#print(nombre_aretes_matrice(graphe.Mat))
+#print(nombre_aretes_liste(graphe.Adj))
 
 def nombre_d_arcs_matrice(matrice_adjacence):
     """
@@ -77,5 +77,38 @@ def nombre_d_arcs_liste(liste_adjacence):
     """
     return sum(len(voisins) for voisins in liste_adjacence.values())
 
-print(nombre_d_arcs_matrice(graphe.Mat))
-print(nombre_d_arcs_liste(graphe.Adj))
+#print(nombre_d_arcs_matrice(graphe.Mat))
+#print(nombre_d_arcs_liste(graphe.Adj))
+
+def charger_graphe(fichier_texte, representation='matrice'):
+    """
+    Charge un graphe à partir d'un fichier texte et le représente en mémoire sous forme de matrice d'adjacence
+    ou de liste d'adjacence.
+    
+    :param fichier_texte: Le fichier contenant la description du graphe.
+    :param representation: 'matrice' pour matrice d'adjacence, 'liste' pour liste d'adjacence.
+    :return: Tuple contenant la liste des sommets et la représentation du graphe.
+    """
+    # Lecture du fichier
+    with open(fichier_texte, 'r') as f:
+        lignes = f.readlines()
+
+    # Récupération du type de graphe
+    type_graphe = lignes[0].strip()
+
+    # Récupération des sommets
+    ns_lignes = int(lignes[1].split()[0])
+    sommets = [lignes[i + 2].strip() for i in range(ns_lignes)]
+
+    # Récupération des arcs ou arêtes
+    na_lignes = int(lignes[ns_lignes + 2].split()[0])
+    arcs_ou_aretes = [tuple(ligne.strip().split()) for ligne in lignes[ns_lignes + 3:ns_lignes + 3 + na_lignes]]
+
+    # Génération de la représentation mémoire en fonction du type de graphe et du choix de représentation
+    if type_graphe == "GRAPHE ORIENTE":
+        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=True)
+    elif type_graphe == "GRAPHE NON ORIENTE":
+        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=False)
+    else:
+        raise ValueError("Type de graphe non valide. Choisissez 'GRAPHE ORIENTE' ou 'GRAPHE NON ORIENTE'.")
+
