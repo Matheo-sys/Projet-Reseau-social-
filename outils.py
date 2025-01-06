@@ -58,3 +58,72 @@ def nombre_aretes_liste(liste_adjacence):
 
 print(nombre_aretes_matrice(graphe.Mat))
 print(nombre_aretes_liste(graphe.Adj))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def nombre_d_arcs_matrice(matrice_adjacence):
+    """
+    Calcule le nombre d'arcs dans un graphe représenté par une matrice d'adjacence.
+
+    :param matrice_adjacence: Liste de listes représentant la matrice d'adjacence.
+    :return: Nombre total d'arcs dans le graphe.
+    """
+    return sum(sum(ligne) for ligne in matrice_adjacence)
+
+def nombre_d_arcs_liste(liste_adjacence):
+    """
+    Calcule le nombre d'arcs dans un graphe représenté par une liste d'adjacence.
+
+    :param liste_adjacence: Dictionnaire ou liste représentant la liste d'adjacence.
+    :return: Nombre total d'arcs dans le graphe.
+    """
+    return sum(len(voisins) for voisins in liste_adjacence.values())
+
+if __name__ == "__main__":
+    # Exemple pour la matrice d'adjacence
+    Mat = [
+        [0, 0, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0]
+    ]
+    print(nombre_d_arcs_matrice(graphe.Mat))
+
+    # Exemple pour la liste d'adjacence
+    Liste = {
+        "Aurora": ["Olavi", "Tapio"],
+        "Ilona": [],
+        "Olavi": ["Tapio"],
+        "Tapio": ["Olavi"]
+    }
+    print(nombre_d_arcs_liste(Liste))
