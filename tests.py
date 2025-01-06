@@ -48,4 +48,8 @@ def test_pile():
     assert depiler(pile) == 1  
     assert pile_vide(pile) == True  
 
- 
+test_file()
+print("Tous les tests pour les files ont réussi.")
+
+test_pile()
+print("Tous les tests pour les piles ont réussi.")
