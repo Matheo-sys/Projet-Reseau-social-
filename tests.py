@@ -191,3 +191,17 @@ def test_parcours_largeur(matrice, sommet_depart):
     assert file_vide(file)
     print(f"Test réussi pour le sommet de départ {sommet_depart} avec la matrice donnée.")
 
+
+
+def test_parcours_profondeur(matrice, sommet_depart):
+    resultat = parcours_profondeur(matrice, sommet_depart)
+    
+    pile = nouvelle_pile()
+    for sommet in resultat:
+        empiler(pile, sommet)
+    
+    while not pile_vide(pile):
+        depiler(pile)
+
+    assert pile_vide(pile), f"Erreur dans le parcours en profondeur depuis le sommet {sommet_depart}"
+    print(f"Test réussi pour le sommet de départ {sommet_depart} avec la matrice donnée.")
