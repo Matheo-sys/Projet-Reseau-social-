@@ -7,6 +7,7 @@ from outils import (
     empiler,
     depiler,
     pile_vide,
+    parcours_profondeur
 )
 from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe,parcours_largeur, generer_graphe, generer_liste, generer_matrice
 

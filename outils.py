@@ -179,8 +179,15 @@ def parcours_largeur(matrice_adjacence, sommet_depart):
     return res
 
 def parcours_profondeur(matrice_adjacence, sommet_depart):
-    res = []
-    pile = nouvelle_pile()
+    """
+    Effectue un parcours en profondeur sur un graphe représenté par une matrice d'adjacence.
+
+    :param matrice_adjacence: Liste de listes représentant la matrice d'adjacence.
+    :param sommet_depart: Indice du sommet de départ (int).
+    :return: Liste des sommets visités dans l'ordre du parcours en profondeur.
+    """
+    res = [] 
+    pile = nouvelle_pile() 
     vus = set()
 
     empiler(pile, sommet_depart)
@@ -190,8 +197,9 @@ def parcours_profondeur(matrice_adjacence, sommet_depart):
     while not pile_vide(pile):
         courant = depiler(pile)
         if courant not in res:
-            res.append(courant) 
+            res.append(courant)
 
+        # Ajouter les voisins du sommet courant à la pile
         for voisin, est_voisin in enumerate(matrice_adjacence[courant]):
             if est_voisin == 1 and voisin not in vus:
                 vus.add(voisin)
