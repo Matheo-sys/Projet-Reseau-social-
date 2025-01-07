@@ -8,7 +8,7 @@ from outils import (
     depiler,
     pile_vide,
 )
-from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe, generer_graphe, generer_liste, generer_matrice
+from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe,parcours_largeur, generer_graphe, generer_liste, generer_matrice
 
 import graphe
 
@@ -166,3 +166,27 @@ except FileNotFoundError:
     print(f"Erreur : Le fichier '{fichier_test}' n'existe pas.")
 except Exception as e:
     print(f"Erreur lors de l'exécution du test : {e}")
+
+def test_parcours_largeur(matrice, sommet_depart):
+    """
+    Teste la fonction de parcours en largeur avec une matrice donnée et un sommet de départ.
+
+    :param matrice: La matrice d'adjacence à utiliser pour le test.
+    :param sommet_depart: Le sommet de départ pour le parcours en largeur.
+    """
+
+    resultat = parcours_largeur(matrice, sommet_depart)
+    
+    # Créer une file pour simuler les sommets explorés
+    file = nouvelle_file()
+    for sommet in resultat:
+        enfiler(file, sommet)
+    
+    # Vérification que la file est vide après avoir dépilé tous les éléments
+    while not file_vide(file):
+        defiler(file)
+
+    # La file doit être vide si tout a été correctement traité
+    assert file_vide(file)
+    print(f"Test réussi pour le sommet de départ {sommet_depart} avec la matrice donnée.")
+

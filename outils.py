@@ -149,3 +149,31 @@ def generer_liste(sommets, arcs_ou_aretes, orienté):
         if not orienté:
             liste_adj[sommets[j]].append(sommets[i])  # Graphe non orienté, ajout dans les deux sens
     return liste_adj
+
+def parcours_largeur(matrice_adjacence, sommet_depart):
+    """
+    Effectue un parcours en largeur sur un graphe représenté par une matrice d'adjacence.
+
+    :param matrice_adjacence: Liste de listes représentant la matrice d'adjacence.
+    :param sommet_depart: Indice du sommet de départ (int).
+    :return: Liste des sommets visités dans l'ordre du parcours en largeur.
+    """
+    res = []  # Liste des sommets explorés (résultat final)
+    file = nouvelle_file()  
+    vus = set()  
+
+    enfiler(file, sommet_depart)
+    vus.add(sommet_depart)
+
+    # Parcours en largeur
+    while not file_vide(file):
+        courant = defiler(file)  
+        res.append(courant) 
+
+        # Parcourir les voisins du sommet courant
+        for voisin, est_voisin in enumerate(matrice_adjacence[courant]):
+            if est_voisin == 1 and voisin not in vus:
+                vus.add(voisin)  # Marquer comme visité
+                enfiler(file, voisin)  # Ajouter à la file des sommets à explorer
+
+    return res
