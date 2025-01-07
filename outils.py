@@ -177,3 +177,24 @@ def parcours_largeur(matrice_adjacence, sommet_depart):
                 enfiler(file, voisin)  # Ajouter à la file des sommets à explorer
 
     return res
+
+def parcours_profondeur(matrice_adjacence, sommet_depart):
+    res = []
+    pile = nouvelle_pile()
+    vus = set()
+
+    empiler(pile, sommet_depart)
+    vus.add(sommet_depart)
+
+    # Parcours en profondeur
+    while not pile_vide(pile):
+        courant = depiler(pile)
+        if courant not in res:
+            res.append(courant) 
+
+        for voisin, est_voisin in enumerate(matrice_adjacence[courant]):
+            if est_voisin == 1 and voisin not in vus:
+                vus.add(voisin)
+                empiler(pile, voisin)
+
+    return res
