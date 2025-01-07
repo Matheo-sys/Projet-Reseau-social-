@@ -194,8 +194,10 @@ def test_parcours_largeur(matrice, sommet_depart):
 
 
 def test_parcours_profondeur(matrice, sommet_depart):
+
     resultat = parcours_profondeur(matrice, sommet_depart)
     
+    # Vérifie que tous les sommets atteignables depuis le sommet de départ sont explorés
     pile = nouvelle_pile()
     for sommet in resultat:
         empiler(pile, sommet)
