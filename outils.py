@@ -123,7 +123,7 @@ def generer_graphe(sommets, arcs_ou_aretes, representation, orienté):
     else:
         raise ValueError("Représentation non valide. Choisissez 'matrice' ou 'liste'.")
 
-def generer_matrice(sommets, arcs_ou_aretes, orienté):
+def generer_matrice(sommets, arcs_ou_aretes, orienté=bool):
     """
     Génère la matrice d'adjacence pour un graphe, orienté ou non.
     """
@@ -137,7 +137,7 @@ def generer_matrice(sommets, arcs_ou_aretes, orienté):
             matrice[j][i] = 1  # Graphe non orienté, ajout dans les deux sens
     return matrice
 
-def generer_liste(sommets, arcs_ou_aretes, orienté):
+def generer_liste(sommets, arcs_ou_aretes, orienté=bool):
     """
     Génère la liste d'adjacence pour un graphe, orienté ou non.
     """
