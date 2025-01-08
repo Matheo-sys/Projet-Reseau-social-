@@ -1,28 +1,7 @@
 from outils import * 
 import random
 
-prenoms = [
-    # Prénoms masculins
-    "Adam", "Adrien", "Alexandre", "Antoine", "Arthur", "Benjamin", "Benoît", "Charles", 
-    "Christophe", "Daniel", "David", "Dylan", "Édouard", "Éric", "Fabien", "François", 
-    "Gabriel", "Geoffrey", "Guillaume", "Hugo", "Jacques", "Jean", "Jérémy", "Jonathan", 
-    "Julien", "Kevin", "Léo", "Louis", "Lucas", "Marc", "Mathieu", "Maxime", "Nicolas", 
-    "Noah", "Olivier", "Paul", "Pierre", "Quentin", "Raphaël", "Romain", "Samuel", 
-    "Simon", "Théo", "Thomas", "Victor", "Vincent", "William", "Xavier", "Yann", "Zacharie",
 
-    # Prénoms féminins
-    "Adèle", "Agnès", "Alice", "Amandine", "Amélie", "Anaïs", "Andréa", "Angélique", 
-    "Anne", "Aurélie", "Camille", "Caroline", "Catherine", "Charlotte", "Chloé", 
-    "Claire", "Clara", "Coralie", "Éléonore", "Élisabeth", "Élodie", "Émilie", 
-    "Emma", "Fanny", "Florence", "Gabrielle", "Hélène", "Inès", "Isabelle", 
-    "Jade", "Jeanne", "Julie", "Justine", "Laetitia", "Léa", "Louise", "Lucie", 
-    "Manon", "Margaux", "Marie", "Marina", "Mathilde", "Mélanie", "Nathalie", 
-    "Noémie", "Océane", "Pauline", "Sarah", "Sophie", "Valentine", "Victoria", "Yasmine", "Zoé",
-
-    # Prénoms neutres ou internationaux
-    "Alex", "Charlie", "Elliot", "Jules", "Milan", "Robin", "Sacha", "Sam", 
-    "Toni", "Chris", "Taylor", "Jordan", "Morgan", "Riley", "Jamie", "Cameron"
-]
 
 def generer_graphe(
     oriente=False, 
@@ -30,11 +9,10 @@ def generer_graphe(
     degre_min=1, 
     degre_max=3, 
     nb_communautes=1, 
-    distance_max=None, 
     prenoms=None, 
     fichier_sortie="graphe.txt"
 ):
-  """
+    """
     Génère un graphe aléatoire en respectant les contraintes données.
     Enregistre la représentation textuelle dans un fichier.
     
@@ -44,10 +22,54 @@ def generer_graphe(
         degre_min (int): Degré minimum des sommets.
         degre_max (int): Degré maximum des sommets.
         nb_communautes (int): Nombre de communautés dans le graphe.
-        distance_max (int): Distance maximale entre deux sommets (pas implémenté dans cette version).
         prenoms (list): Liste de prénoms à utiliser pour les sommets.
         fichier_sortie (str): Nom du fichier de sortie.
     """
+    if prenoms is None:
+        raise ValueError("Une liste de prénoms doit être fournie pour nommer les sommets.")
+
+    if nb_sommets > len(prenoms):
+        raise ValueError("Le nombre de sommets dépasse le nombre de prénoms disponibles.")
+    
+    # Sélectionner un sous-ensemble de prénoms pour les sommets
+    sommets = random.sample(prenoms, nb_sommets)
+    graphe = {sommet: [] for sommet in sommets}
+    
+    # Diviser les sommets en communautés
+    communautes = [sommets[i::nb_communautes] for i in range(nb_communautes)]
+    for communaute in communautes:
+        for sommet in communaute:
+            nb_voisins = random.randint(degre_min, min(degre_max, len(communaute) - 1))
+            voisins = random.sample([s for s in communaute if s != sommet], nb_voisins)
+            graphe[sommet].extend(voisins)
+
+            # Ajouter les arcs/arêtes dans l'autre sens si non orienté
+            if not oriente:
+                for voisin in voisins:
+                    graphe[voisin].append(sommet)
+
+    # Éviter les doublons et créer la liste des arcs/arêtes
+    aretes = set()
+    for sommet, voisins in graphe.items():
+        for voisin in voisins:
+            if oriente:
+                aretes.add((sommet, voisin))
+            else:
+                aretes.add(tuple(sorted((sommet, voisin))))
+
+    # Écriture dans le fichier
+    with open(fichier_sortie, "w") as f:
+        f.write("GRAPHE ORIENTE\n" if oriente else "GRAPHE NON ORIENTE\n")
+        f.write(f"{nb_sommets} SOMMETS\n")
+        for sommet in sommets:
+            f.write(f"{sommet}\n")
+        f.write(f"{len(aretes)} {'ARCS' if oriente else 'ARETES'}\n")
+        for arete in aretes:
+            f.write(" ".join(arete) + "\n")
+
+    print(f"Graphe généré et enregistré dans le fichier {fichier_sortie}.")
+
+
 
 def temps_propagation(liste_adjacence, source, cible):
     """
@@ -89,3 +111,5 @@ def chemin_propagation(graphe, source, cible):
     if chemin is None:
         return None
     return chemin
+
+
