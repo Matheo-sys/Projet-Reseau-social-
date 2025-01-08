@@ -9,7 +9,7 @@ from outils import (
     pile_vide,
     parcours_profondeur
 )
-from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe,parcours_largeur, generer_graphe, generer_liste, generer_matrice
+from outils import nombre_aretes_matrice, nombre_aretes_liste, nombre_d_arcs_matrice, nombre_d_arcs_liste, charger_graphe,parcours_largeur, generer_graphe, generer_liste, generer_matrice, reseau_une_seule_communaute
 
 import graphe
 
@@ -207,3 +207,24 @@ def test_parcours_profondeur(matrice, sommet_depart):
 
     assert pile_vide(pile), f"Erreur dans le parcours en profondeur depuis le sommet {sommet_depart}"
     print(f"Test réussi pour le sommet de départ {sommet_depart} avec la matrice donnée.")
+
+def test_reseau_une_seule_communaute():
+    matrice_1 = [
+        [0, 1, 0, 0],
+        [1, 0, 1, 0],
+        [0, 1, 0, 1],
+        [0, 0, 1, 0]
+    ]
+    assert reseau_une_seule_communaute(matrice_1) == True
+
+    matrice_2 = [
+        [0, 1, 0, 0],
+        [1, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0]
+    ]
+    assert reseau_une_seule_communaute(matrice_2) == False
+
+    print("Tous les tests passent.")
+
+test_reseau_une_seule_communaute()

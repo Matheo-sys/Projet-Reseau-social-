@@ -206,3 +206,11 @@ def parcours_profondeur(matrice_adjacence, sommet_depart):
                 empiler(pile, voisin)
 
     return res
+
+def reseau_une_seule_communaute(matrice_adjacence):
+
+    # Utiliser la fonction parcours_largeur pour visiter les sommets
+    sommets_visites = parcours_largeur(matrice_adjacence, 0)
+    
+    # Si tous les sommets ont été visités, il s'agit d'une seule communauté
+    return len(sommets_visites) == len(matrice_adjacence)
