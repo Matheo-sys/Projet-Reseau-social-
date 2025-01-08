@@ -7,15 +7,17 @@ from outils import (
     empiler,
     depiler,
     pile_vide,
-    parcours_profondeur
-)
-from outils import (nombre_aretes_matrice, 
-                    nombre_aretes_liste, 
-                    nombre_d_arcs_matrice, 
-                    nombre_d_arcs_liste, 
-                    charger_graphe, 
-                    parcours_largeur,
-                    reseau_une_seule_communaute)
+    parcours_profondeur,
+    nombre_aretes_matrice, 
+    nombre_aretes_liste, 
+    nombre_d_arcs_matrice, 
+    nombre_d_arcs_liste, 
+    charger_graphe, 
+    parcours_largeur,
+    reseau_une_seule_communaute,
+    plus_grands_influenceurs,
+    lire_graphe)
+
 
 import graphe
 
@@ -233,3 +235,18 @@ def test_reseau_une_seule_communaute():
     print("Tous les tests passent pour reseau_une_seule_communauté.")
 
 test_reseau_une_seule_communaute()
+
+def test_influenceurs():
+    # Charger le graphe à partir du fichier
+    fichier_graphe = "go-9-01.txt"  # Assure-toi que ce fichier est dans le même répertoire
+    graphe = lire_graphe(fichier_graphe)
+
+    # Trouver les plus grands influenceurs
+    influenceurs = plus_grands_influenceurs(graphe)
+    
+    # Afficher les résultats
+    print("Plus grands influenceurs :", influenceurs)
+
+# Exécuter le test
+if __name__ == "__main__":
+    test_influenceurs()

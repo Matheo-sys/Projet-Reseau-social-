@@ -214,3 +214,51 @@ def reseau_une_seule_communaute(matrice_adjacence):
     
     # Si tous les sommets ont été visités, il s'agit d'une seule communauté
     return len(sommets_visites) == len(matrice_adjacence)
+
+# outils.py
+def lire_graphe(fichier):
+    """
+    Lit un fichier décrivant un graphe orienté et retourne une liste d'adjacence.
+    
+    :param fichier: Chemin vers le fichier texte décrivant le graphe.
+    :return: Une liste d'adjacence représentant le graphe.
+    """
+    with open(fichier, 'r') as f:
+        lignes = f.readlines()
+    
+    # Trouver le nombre de sommets
+    nb_sommets = int(lignes[1].split()[0])
+    
+    # Initialiser la liste d'adjacence
+    liste_adjacence = {i: [] for i in range(nb_sommets)}
+    
+    # Lire les arcs
+    for ligne in lignes[4:]:
+        source, cible = map(int, ligne.split())
+        liste_adjacence[source].append(cible)
+    
+    return liste_adjacence
+
+
+def plus_grands_influenceurs(liste_adjacence):
+    """
+    Identifie les plus grands influenceurs d'un réseau social.
+    
+    :param liste_adjacence: Dictionnaire représentant le graphe orienté sous forme de liste d'adjacence.
+    :return: Liste des sommets qui sont les plus grands influenceurs.
+    """
+    # Initialisation d'un dictionnaire pour compter les suivis entrants
+    suivis_entrants = {sommet: 0 for sommet in liste_adjacence}
+
+    # Parcourir tous les sommets et leurs voisins
+    for sommet, voisins in liste_adjacence.items():
+        for voisin in voisins:
+            suivis_entrants[voisin] += 1  # Un sommet reçoit un suivi entrant
+
+    # Trouver le nombre maximal de suivis entrants
+    max_suivi = max(suivis_entrants.values())
+
+    # Identifier tous les sommets qui ont ce nombre de suivis entrants
+    influenceurs = [sommet for sommet, suivi in suivis_entrants.items() if suivi == max_suivi]
+
+    return influenceurs
