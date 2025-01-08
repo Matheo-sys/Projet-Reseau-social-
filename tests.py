@@ -230,6 +230,6 @@ def test_reseau_une_seule_communaute():
     ]
     assert reseau_une_seule_communaute(matrice_2) == False
 
-    print("Tous les tests passent.")
+    print("Tous les tests passent pour reseau_une_seule_communauté.")
 
 test_reseau_une_seule_communaute()

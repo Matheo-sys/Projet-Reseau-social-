@@ -23,3 +23,20 @@ def temps_propagation(liste_adjacence, source, cible):
     # Calculer le temps total de propagation (5 minutes par lien)
     temps_total = distance_arcs * 5
     return temps_total
+
+def chemin_propagation(graphe, source, cible):
+    """
+    Retourne le chemin minimum entre une source et une cible dans un graphe orienté.
+
+    :param graphe: dict, le graphe représentant les relations entre les personnes
+    :param source: str, la personne source de l'information
+    :param cible: str, la personne cible de l'information
+    :return: list, une liste représentant le chemin minimum ou None si aucun chemin n'existe
+    """
+    # Utilise parcours_largeur pour trouver le chemin minimum
+    chemin = parcours_largeur(graphe, source, cible)
+    
+    # Retourner le chemin ou None si aucun chemin n'existe
+    if chemin is None:
+        return None
+    return chemin
