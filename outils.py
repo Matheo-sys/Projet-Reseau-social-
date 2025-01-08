@@ -215,28 +215,41 @@ def reseau_une_seule_communaute(matrice_adjacence):
     # Si tous les sommets ont été visités, il s'agit d'une seule communauté
     return len(sommets_visites) == len(matrice_adjacence)
 
-# outils.py
 def lire_graphe(fichier):
     """
-    Lit un fichier décrivant un graphe orienté et retourne une liste d'adjacence.
+    Lit un fichier contenant un graphe orienté et retourne une liste d'adjacence.
     
-    :param fichier: Chemin vers le fichier texte décrivant le graphe.
-    :return: Une liste d'adjacence représentant le graphe.
+    :param fichier: Chemin du fichier contenant le graphe.
+    :return: Liste d'adjacence représentant le graphe.
     """
     with open(fichier, 'r') as f:
         lignes = f.readlines()
-    
-    # Trouver le nombre de sommets
-    nb_sommets = int(lignes[1].split()[0])
-    
-    # Initialiser la liste d'adjacence
-    liste_adjacence = {i: [] for i in range(nb_sommets)}
-    
-    # Lire les arcs
-    for ligne in lignes[4:]:
-        source, cible = map(int, ligne.split())
+
+    sommets = []
+    arcs = []
+
+    for ligne in lignes:
+        ligne = ligne.strip()
+        if not ligne or "SOMMETS" in ligne or "ARCS" in ligne:  # Ignorer les lignes vides ou d'en-tête
+            continue
+
+        if "SOMMET" not in ligne and "ARC" not in ligne:
+            try:
+                source, cible = map(int, ligne.split())
+                arcs.append((source, cible))
+            except ValueError:
+                print(f"Ligne ignorée (mal formatée) : {ligne}")
+
+    # Extraire les sommets uniques
+    for arc in arcs:
+        sommets.extend(arc)
+    sommets = sorted(set(sommets))  # Liste triée de sommets uniques
+
+    # Construire la liste d'adjacence
+    liste_adjacence = {sommet: [] for sommet in sommets}
+    for source, cible in arcs:
         liste_adjacence[source].append(cible)
-    
+
     return liste_adjacence
 
 
