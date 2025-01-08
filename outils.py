@@ -106,24 +106,24 @@ def charger_graphe(fichier_texte, representation='matrice'):
 
     # Génération de la représentation mémoire en fonction du type de graphe et du choix de représentation
     if type_graphe == "GRAPHE ORIENTE":
-        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=True)
+        return generer_graphe(sommets, arcs_ou_aretes, representation, oriente=True)
     elif type_graphe == "GRAPHE NON ORIENTE":
-        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=False)
+        return generer_graphe(sommets, arcs_ou_aretes, representation, oriente=False)
     else:
         raise ValueError("Type de graphe non valide. Choisissez 'GRAPHE ORIENTE' ou 'GRAPHE NON ORIENTE'.")
 
-def generer_graphe(sommets, arcs_ou_aretes, representation, orienté):
+def generer_graphe(sommets, arcs_ou_aretes, representation, oriente):
     """
     Génère la représentation en fonction du type de graphe et de la représentation mémoire choisie (matrice ou liste).
     """
     if representation == 'matrice':
-        return sommets, generer_matrice(sommets, arcs_ou_aretes, orienté)
+        return sommets, generer_matrice(sommets, arcs_ou_aretes, oriente)
     elif representation == 'liste':
-        return sommets, generer_liste(sommets, arcs_ou_aretes, orienté)
+        return sommets, generer_liste(sommets, arcs_ou_aretes, oriente)
     else:
         raise ValueError("Représentation non valide. Choisissez 'matrice' ou 'liste'.")
 
-def generer_matrice(sommets, arcs_ou_aretes, orienté=bool):
+def generer_matrice(sommets, arcs_ou_aretes, oriente=bool):
     """
     Génère la matrice d'adjacence pour un graphe, orienté ou non.
     """
@@ -133,11 +133,11 @@ def generer_matrice(sommets, arcs_ou_aretes, orienté=bool):
         i = sommets.index(arc[0])
         j = sommets.index(arc[1])
         matrice[i][j] = 1
-        if not orienté:
+        if not oriente:
             matrice[j][i] = 1  # Graphe non orienté, ajout dans les deux sens
     return matrice
 
-def generer_liste(sommets, arcs_ou_aretes, orienté=bool):
+def generer_liste(sommets, arcs_ou_aretes, oriente=bool):
     """
     Génère la liste d'adjacence pour un graphe, orienté ou non.
     """
@@ -146,7 +146,7 @@ def generer_liste(sommets, arcs_ou_aretes, orienté=bool):
         i = sommets.index(arc[0])
         j = sommets.index(arc[1])
         liste_adj[sommets[i]].append(sommets[j])
-        if not orienté:
+        if not oriente:
             liste_adj[sommets[j]].append(sommets[i])  # Graphe non orienté, ajout dans les deux sens
     return liste_adj
 
