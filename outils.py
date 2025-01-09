@@ -106,24 +106,24 @@ def charger_graphe(fichier_texte, representation='matrice'):
 
     # Génération de la représentation mémoire en fonction du type de graphe et du choix de représentation
     if type_graphe == "GRAPHE ORIENTE":
-        return generer_graphe(sommets, arcs_ou_aretes, representation, oriente=True)
+        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=True)
     elif type_graphe == "GRAPHE NON ORIENTE":
-        return generer_graphe(sommets, arcs_ou_aretes, representation, oriente=False)
+        return generer_graphe(sommets, arcs_ou_aretes, representation, orienté=False)
     else:
         raise ValueError("Type de graphe non valide. Choisissez 'GRAPHE ORIENTE' ou 'GRAPHE NON ORIENTE'.")
 
-def generer_graphe(sommets, arcs_ou_aretes, representation, oriente):
+def generer_graphe(sommets, arcs_ou_aretes, representation, orienté):
     """
     Génère la représentation en fonction du type de graphe et de la représentation mémoire choisie (matrice ou liste).
     """
     if representation == 'matrice':
-        return sommets, generer_matrice(sommets, arcs_ou_aretes, oriente)
+        return sommets, generer_matrice(sommets, arcs_ou_aretes, orienté)
     elif representation == 'liste':
-        return sommets, generer_liste(sommets, arcs_ou_aretes, oriente)
+        return sommets, generer_liste(sommets, arcs_ou_aretes, orienté)
     else:
         raise ValueError("Représentation non valide. Choisissez 'matrice' ou 'liste'.")
 
-def generer_matrice(sommets, arcs_ou_aretes, oriente=bool):
+def generer_matrice(sommets, arcs_ou_aretes, orienté=bool):
     """
     Génère la matrice d'adjacence pour un graphe, orienté ou non.
     """
@@ -133,11 +133,11 @@ def generer_matrice(sommets, arcs_ou_aretes, oriente=bool):
         i = sommets.index(arc[0])
         j = sommets.index(arc[1])
         matrice[i][j] = 1
-        if not oriente:
+        if not orienté:
             matrice[j][i] = 1  # Graphe non orienté, ajout dans les deux sens
     return matrice
 
-def generer_liste(sommets, arcs_ou_aretes, oriente=bool):
+def generer_liste(sommets, arcs_ou_aretes, orienté=bool):
     """
     Génère la liste d'adjacence pour un graphe, orienté ou non.
     """
@@ -146,7 +146,7 @@ def generer_liste(sommets, arcs_ou_aretes, oriente=bool):
         i = sommets.index(arc[0])
         j = sommets.index(arc[1])
         liste_adj[sommets[i]].append(sommets[j])
-        if not oriente:
+        if not orienté:
             liste_adj[sommets[j]].append(sommets[i])  # Graphe non orienté, ajout dans les deux sens
     return liste_adj
 
@@ -215,42 +215,43 @@ def reseau_une_seule_communaute(matrice_adjacence):
     # Si tous les sommets ont été visités, il s'agit d'une seule communauté
     return len(sommets_visites) == len(matrice_adjacence)
 
-def lire_graphe(fichier):
+def lire_graphe(chemin_fichier):
     """
-    Lit un fichier contenant un graphe orienté et retourne une liste d'adjacence.
-    
-    :param fichier: Chemin du fichier contenant le graphe.
-    :return: Liste d'adjacence représentant le graphe.
+    Lit un fichier décrivant un graphe et retourne une liste d'adjacence.
+
+    :param chemin_fichier: Chemin du fichier contenant le graphe.
+    :return: Liste d'adjacence (dictionnaire).
     """
-    with open(fichier, 'r') as f:
-        lignes = f.readlines()
+    graphe = {}
+    try:
+        with open(chemin_fichier, 'r') as fichier:
+            for ligne in fichier:
+                ligne = ligne.strip()
+                
+                # Ignorer les lignes vides ou les métadonnées
+                if not ligne or ligne.isalpha() or any(x in ligne for x in ["SOMMETS", "ARCS"]):
+                    continue
+                
+                # Vérifier si la ligne est un arc (2 nombres séparés par un espace)
+                try:
+                    source, cible = map(int, ligne.split())
+                    
+                    # Ajouter les arcs au graphe
+                    if source not in graphe:
+                        graphe[source] = []
+                    graphe[source].append(cible)
+                    
+                    # Ajouter les sommets isolés
+                    if cible not in graphe:
+                        graphe[cible] = []
+                except ValueError:
+                    # Ligne non conforme à un arc, ignorer silencieusement
+                    pass
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier '{chemin_fichier}' est introuvable.")
+        return {}
+    return graphe
 
-    sommets = []
-    arcs = []
-
-    for ligne in lignes:
-        ligne = ligne.strip()
-        if not ligne or "SOMMETS" in ligne or "ARCS" in ligne:  # Ignorer les lignes vides ou d'en-tête
-            continue
-
-        if "SOMMET" not in ligne and "ARC" not in ligne:
-            try:
-                source, cible = map(int, ligne.split())
-                arcs.append((source, cible))
-            except ValueError:
-                print(f"Ligne ignorée (mal formatée) : {ligne}")
-
-    # Extraire les sommets uniques
-    for arc in arcs:
-        sommets.extend(arc)
-    sommets = sorted(set(sommets))  # Liste triée de sommets uniques
-
-    # Construire la liste d'adjacence
-    liste_adjacence = {sommet: [] for sommet in sommets}
-    for source, cible in arcs:
-        liste_adjacence[source].append(cible)
-
-    return liste_adjacence
 
 
 def plus_grands_influenceurs(liste_adjacence):

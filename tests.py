@@ -237,16 +237,21 @@ def test_reseau_une_seule_communaute():
 test_reseau_une_seule_communaute()
 
 def test_influenceurs():
-    # Charger le graphe à partir du fichier
-    fichier_graphe = "go-9-01.txt"  # Assure-toi que ce fichier est dans le même répertoire
-    graphe = lire_graphe(fichier_graphe)
+    # Fichier de test
+    chemin_fichier = input("Entrez le chemin du fichier de graphe : ")
+    
+    # Lire le graphe
+    graphe = lire_graphe(chemin_fichier)
+    
+    if not graphe:
+        print("Le graphe est vide ou le fichier est invalide.")
+        return
 
-    # Trouver les plus grands influenceurs
+    # Identifier les plus grands influenceurs
     influenceurs = plus_grands_influenceurs(graphe)
     
-    # Afficher les résultats
-    print("Plus grands influenceurs :", influenceurs)
+    print(f"Plus grands influenceurs : {influenceurs}")
 
-# Exécuter le test
+
 if __name__ == "__main__":
     test_influenceurs()
