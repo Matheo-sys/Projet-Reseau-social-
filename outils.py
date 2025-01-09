@@ -7,7 +7,7 @@ def enfiler(f,e):
     f.append(e)
 
 def defiler(f):
-    return f.pop(0)
+    return f.pop(0) # premier élément
 
 def file_vide(f): 
     return len(f) == 0
@@ -20,7 +20,7 @@ def empiler(p, e):
     p.append(e)
 
 def depiler(p):
-    return p.pop()
+    return p.pop() # dernier élément
 
 def pile_vide(p):
     return len(p) == 0
