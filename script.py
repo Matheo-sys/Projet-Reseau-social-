@@ -1,7 +1,6 @@
 import argparse
 import random
 
-# La fonction generer_graphe à utiliser (identique à celle que tu as fournie plus tôt)
 def generer_graphe(
     oriente=False, 
     nb_sommets=10, 
@@ -11,7 +10,7 @@ def generer_graphe(
     prenoms=None, 
     fichier_sortie="graphe.txt"
 ):
-    """
+    """ 
     Génère un graphe aléatoire en respectant les contraintes données.
     Enregistre la représentation textuelle dans un fichier.
     """
@@ -73,14 +72,26 @@ def main():
 
     args = parser.parse_args()
 
-    # Validation du paramètre prenoms
     if args.prenoms:
         prenoms = args.prenoms.split(",")
     else:
         prenoms = [
     "Alice", "Bob", "Charlie", "David", "Eve", "Franck", "Grace", "Hannah", "Igor", "Jack",
     "Katherine", "Louis", "Marie", "Nina", "Oscar", "Paul", "Quentin", "Rachel", "Samuel", "Tina",
-    "Ursula", "Victor", "Wendy", "Xavier", "Yasmine", "Zoe"] 
+    "Ursula", "Victor", "Wendy", "Xavier", "Yasmine", "Zoe", "Lucie", "Martin", "Antoine", "Clara",
+    "Sophie", "Lucas", "Hugo", "Emma", "Léa", "Noah", "Nathan", "Gabriel", "Chloé", "Liam",
+    "Jules", "Camille", "Amélie", "Thomas", "Mathilde", "Adrien", "Élise", "Sarah", "Maxime", "Anna",
+    "Léo", "Jade", "Émilie", "Florian", "Mélanie", "Arthur", "Pauline", "Théo", "Charlotte", "Mathis",
+    "Margaux", "Clément", "Justine", "Raphaël", "Alexis", "Élodie", "Manon", "Étienne", "Élisa", "Valentin",
+    "Inès", "Julien", "Romane", "Simon", "Maël", "Amandine", "Baptiste", "Elsa", "Éléa", "Corentin",
+    "Killian", "Victoire", "Sacha", "Gaël", "Léon", "Nora", "Sofia", "Thibault", "Héloïse", "Léonard",
+    "Diane", "Tristan", "Maya", "Noémie", "Audrey", "Lila", "Célia", "Adrienne", "Jean", "Louise",
+    "Camille", "Théodore", "Lorraine", "Gaston", "Perrine", "Mathéo", "Clara", "Nicolas", "Océane", "Robin",
+    "Zoé", "Lena", "Éthan", "Livia", "Elliot", "Éloïse", "Cassandra", "Alban", "Morgane", "Gaëtan",
+    "Roméo", "Elena", "Aaron", "Aurore", "Isabelle", "Gaspard", "Lilian", "Axel", "Fanny", "Soline",
+    "Milan", "Aliénor", "Timéo", "Juliette", "Anouk", "Cyril", "Camélia", "Fabien", "Dorian", "Iris"
+]
+
 
     # Appel de la fonction de génération du graphe avec les arguments reçus
     generer_graphe(

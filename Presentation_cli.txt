@@ -1,0 +1,35 @@
+1. Générer un graphe par défaut avec des paramètres standard
+python3 script.py
+
+2. Générer un graphe orienté
+python3 script.py --oriente
+
+3. Spécifier un nombre de sommets
+python3 script.py --nb_sommets 20
+
+4. Spécifier un degré minimum et maximum pour les sommets
+python3 script.py --degre_min 2 --degre_max 5
+
+5. Générer un graphe avec plusieurs communautés
+python3 script.py --nb_communautes 3
+
+6. Spécifier une liste personnalisée de prénoms
+python3 script.py --prenoms Alice,Bob,Charlie,David,Eve
+
+7. Générer un graphe avec un fichier de sortie personnalisé
+python3 script.py --fichier_sortie mon_graphe.txt
+
+8. Combiner plusieurs options : graphe orienté, 15 sommets, 2 communautés, degré min/max
+python3 script.py --oriente --nb_sommets 15 --nb_communautes 2 --degre_min 1 --degre_max 4
+
+9. Générer un graphe avec une grande liste de prénoms
+python3 script.py --nb_sommets 100 --prenoms Alice,Bob,Charlie,David,Eve,Franck,Grace,Hannah,Igor,Jack,Katherine,Louis,Marie,Nina,Oscar,Paul,Quentin,Rachel,Samuel,Tina,Ursula,Victor,Wendy,Xavier,Yasmine,Zoe,Lucie,Martin,Antoine,Clara,Sophie,Lucas,Hugo,Emma,Léa,Noah,Nathan,Gabriel,Chloé,Liam,Jules,Camille,Amélie,Thomas,Mathilde,Adrien,Élise,Sarah,Maxime,Anna,Léo,Jade,Émilie,Florian,Mélanie,Arthur,Pauline,Théo,Charlotte,Mathis,Margaux,Clément,Justine,Raphaël,Alexis,Élodie,Manon,Étienne,Élisa,Valentin,Inès,Julien,Romane,Simon,Maël,Amandine,Baptiste,Elsa,Éléa,Corentin,Killian,Victoire,Sacha,Gaël,Léon,Nora,Sofia,Thibault,Héloïse,Léonard,Diane,Tristan,Maya,Noémie,Audrey,Lila,Célia,Adrienne,Jean,Louise,Camille,Théodore,Lorraine,Gaston,Perrine,Mathéo,Clara,Nicolas,Océane,Robin,Zoé,Lena,Éthan,Livia,Elliot,Éloïse,Cassandra,Alban,Morgane,Gaëtan,Roméo,Elena,Aaron,Aurore,Isabelle,Gaspard,Lilian,Axel,Fanny,Soline,Milan,Aliénor,Timéo,Juliette,Anouk,Cyril,Camélia,Fabien,Dorian,Iris
+
+10. Créer un graphe avec un grand nombre de sommets et un fichier spécifique
+python3 script.py --nb_sommets 50 --fichier_sortie graphe_large.txt
+
+11. Afficher l'aide de la CLI
+python3 script.py --help
+
+12. Combiner toutes les options pour montrer la flexibilité maximale
+python3 script.py --oriente --nb_sommets 25 --degre_min 2 --degre_max 6 --nb_communautes 5 --prenoms Alice,Bob,Charlie,David,Eve,Franck,Grace,Hannah,Igor,Jack,Katherine,Louis,Marie,Nina,Oscar,Paul,Quentin,Rachel,Samuel,Tina,Ursula,Victor,Wendy,Xavier,Yasmine,Zoe --fichier_sortie graphe_personnalise.txt

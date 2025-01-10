@@ -82,17 +82,17 @@ def temps_propagation(liste_adjacence, source, cible):
     :param cible: Personne cible de l'information.
     :return: Temps minimum de propagation (en minutes) ou None si la cible n'est pas atteignable.
     """
-    # Exécuter le parcours en largeur pour obtenir les distances depuis la source
+    # Exécute le parcours en largeur pour obtenir les distances depuis la source
     distances = parcours_largeur(liste_adjacence, source)
     
-    # Vérifier si la cible est atteignable
+    # Vérifie si la cible est atteignable
     if cible not in distances:
         return None 
     
-    # Récupérer la distance minimale en termes de nombre d'arêtes
+    # Récupére la distance minimale en termes de nombre d'arêtes
     distance_arcs = distances[cible]
     
-    # Calculer le temps total de propagation (5 minutes par lien)
+    # Calcule le temps total de propagation (5 minutes par lien)
     temps_total = distance_arcs * 5
     return temps_total
 
@@ -108,7 +108,7 @@ def chemin_propagation(graphe, source, cible):
     # Utilise parcours_largeur pour trouver le chemin minimum
     chemin = parcours_largeur(graphe, source, cible)
     
-    # Retourner le chemin ou None si aucun chemin n'existe
+    # Retourne le chemin ou None si aucun chemin n'existe
     if chemin is None:
         return None
     return chemin
