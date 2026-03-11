@@ -1,0 +1,42 @@
+GRAPHE NON ORIENTE
+12 SOMMETS
+Valentin
+Samuel
+Romane
+Igor
+Antoine
+Léa
+Camille
+Aaron
+Louise
+Sofia
+Théodore
+Élodie
+27 ARETES
+Aaron Théodore
+Romane Valentin
+Samuel Valentin
+Sofia Valentin
+Aaron Sofia
+Antoine Valentin
+Aaron Louise
+Igor Sofia
+Igor Louise
+Aaron Élodie
+Igor Élodie
+Léa Valentin
+Romane Théodore
+Sofia Théodore
+Louise Léa
+Antoine Romane
+Camille Louise
+Igor Valentin
+Samuel Sofia
+Léa Samuel
+Antoine Sofia
+Aaron Camille
+Léa Théodore
+Samuel Élodie
+Sofia Élodie
+Antoine Élodie
+Léa Sofia

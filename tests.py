@@ -56,11 +56,6 @@ def test_pile():
     assert depiler(pile) == 1  
     assert pile_vide(pile) == True  
 
-test_file()
-print("Tous les tests pour les files ont réussi.")
-
-test_pile()
-print("Tous les tests pour les piles ont réussi.")
 
 def test_nombre_aretes_matrice(matrice_adj):
 
@@ -76,9 +71,6 @@ def test_nombre_aretes_matrice(matrice_adj):
         depiler(pile)
 
     assert pile_vide(pile)
-
-test_nombre_aretes_matrice(graphe.Mat)
-print("Test pour la matrice d'adjacence réussi.")
 
 
 def test_nombre_aretes_liste(liste_adj):
@@ -96,8 +88,6 @@ def test_nombre_aretes_liste(liste_adj):
 
     assert pile_vide(pile)
 
-test_nombre_aretes_liste(graphe.Adj)
-print("Test pour la liste d'adjacence réussi.")
 
 def test_nombre_d_arcs_matrice(matrice_adjacence):
     
@@ -113,9 +103,6 @@ def test_nombre_d_arcs_matrice(matrice_adjacence):
     assert pile_vide(pile)  # Vérifie que la pile est vide
 
 
-test_nombre_d_arcs_matrice(graphe.Mat)
-print("Test pour la fonction nombre_d_arcs_matrice réussi.")
-
 def test_nombre_d_arcs_liste(liste_adjacence):
 
     resultat = nombre_d_arcs_liste(liste_adjacence)
@@ -129,9 +116,6 @@ def test_nombre_d_arcs_liste(liste_adjacence):
 
     assert pile_vide(pile)  # Vérifie que la pile est vide
 
-# Appel du test
-test_nombre_d_arcs_liste(graphe.Adj)
-print("Test pour la fonction nombre_d_arcs_liste réussi.")
 
 def test_charger_graphe(fichier_test):
     """
@@ -165,16 +149,8 @@ def test_charger_graphe(fichier_test):
     for sommet in liste_adj:
         assert sommet in sommets, f"Le sommet {sommet} dans la liste d'adjacence n'existe pas dans la liste des sommets."
 
-    print("Tous les tests sont passés avec succès.")
+    print("Tous les tests charger_graphe sont passés avec succès.")
 
-# Demande le fichier de test directement lorsque le script est exécuté
-fichier_test = input("Entrez le chemin du fichier de graphe : ")
-try:
-    test_charger_graphe(fichier_test)
-except FileNotFoundError:
-    print(f"Erreur : Le fichier '{fichier_test}' n'existe pas.")
-except Exception as e:
-    print(f"Erreur lors de l'exécution du test : {e}")
 
 def test_parcours_largeur(matrice, sommet_depart):
     """
@@ -234,11 +210,10 @@ def test_reseau_une_seule_communaute():
 
     print("Tous les tests passent pour reseau_une_seule_communauté.")
 
-test_reseau_une_seule_communaute()
 
 def test_influenceurs():
     # Fichier de test
-    chemin_fichier = input("Entrez le chemin du fichier de graphe : ")
+    chemin_fichier = input("Entrez le chemin du fichier de graphe pour tester les influenceurs: ")
     
     # Lire le graphe
     graphe = lire_graphe(chemin_fichier)
@@ -252,6 +227,37 @@ def test_influenceurs():
     
     print(f"Plus grands influenceurs : {influenceurs}")
 
+def run_all_tests():
+    test_file()
+    print("Tous les tests pour les files ont réussi.")
+
+    test_pile()
+    print("Tous les tests pour les piles ont réussi.")
+
+    test_nombre_aretes_matrice(graphe.Mat)
+    print("Test pour la matrice d'adjacence réussi.")
+
+    test_nombre_aretes_liste(graphe.Adj)
+    print("Test pour la liste d'adjacence réussi.")
+
+    test_nombre_d_arcs_matrice(graphe.Mat)
+    print("Test pour la fonction nombre_d_arcs_matrice réussi.")
+
+    test_nombre_d_arcs_liste(graphe.Adj)
+    print("Test pour la fonction nombre_d_arcs_liste réussi.")
+    
+    test_reseau_une_seule_communaute()
 
 if __name__ == "__main__":
+    run_all_tests()
+    
+    # Interactif
+    print("\n--- Tests interactifs ---")
+    f = input("Entrez le chemin du fichier de graphe pour charger_graphe : ")
+    if f:
+        try:
+            test_charger_graphe(f)
+        except:
+            pass
+    
     test_influenceurs()
