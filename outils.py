@@ -150,33 +150,68 @@ def generer_liste(sommets, arcs_ou_aretes, orienté=bool):
             liste_adj[sommets[j]].append(sommets[i])  # Graphe non orienté, ajout dans les deux sens
     return liste_adj
 
-def parcours_largeur(matrice_adjacence, sommet_depart):
+def parcours_largeur(graphe, depart, cible=None):
     """
-    Effectue un parcours en largeur sur un graphe représenté par une matrice d'adjacence.
-
-    :param matrice_adjacence: Liste de listes représentant la matrice d'adjacence.
-    :param sommet_depart: Indice du sommet de départ (int).
-    :return: Liste des sommets visités dans l'ordre du parcours en largeur.
+    Parcours en largeur (BFS) générique.
+    Supporte une matrice d'adjacence (indices) ou une liste d'adjacence (noms/clés).
+    
+    :param graphe: Liste de listes (matrice) ou Dictionnaire (liste d'adjacence).
+    :param depart: Sommet de départ.
+    :param cible: (Optionnel) Sommet cible pour trouver le chemin le plus court.
+    :return: 
+        - Si cible est None : Liste des sommets visités ou dict des distances (si utilisé par main.py).
+        - Si cible est fournie : Liste représentant le chemin le plus court ou None.
     """
-    res = []  # Liste des sommets explorés (résultat final)
-    file = nouvelle_file()  
-    vus = set()  
+    if isinstance(graphe, dict):
+        # Cas Liste d'Adjacence (Dictionnaire)
+        file = [depart]
+        vus = {depart: None} # Stocke le parent pour reconstruire le chemin
+        distances = {depart: 0}
+        ordre_visite = []
+        
+        while file:
+            courant = file.pop(0)
+            ordre_visite.append(courant)
+            
+            if cible and courant == cible:
+                break
+                
+            for voisin in graphe.get(courant, []):
+                if voisin not in vus:
+                    vus[voisin] = courant
+                    distances[voisin] = distances[courant] + 1
+                    file.append(voisin)
+        
+        # Retourne ce qui est attendu selon l'usage
+        if cible:
+            if cible not in vus: return None
+            chemin = []
+            while cible is not None:
+                chemin.append(cible)
+                cible = vus[cible]
+            return chemin[::-1] # Chemin de depart à cible
+            
+        # Pour temps_propagation dans main.py qui attend un dict de distances
+        # Mais le parcours_largeur original dans outils.py renvoie une liste.
+        # On va renvoyer les distances si l'appel vient de main.py (via l'inférence du type de retour).
+        # Pour rester compatible avec le projet original, on renvoie les sommets si pas de cible.
+        # Sauf si on veut explicitement les distances pour main.py.
+        # On va renvoyer les distances ici car main.py en a besoin.
+        return distances if any("distances" in str(line) for line in sys._getframe(1).f_code.co_names if hasattr(sys, "_getframe")) else ordre_visite
 
-    enfiler(file, sommet_depart)
-    vus.add(sommet_depart)
-
-    # Parcours en largeur
-    while not file_vide(file):
-        courant = defiler(file)  
-        res.append(courant) 
-
-        # Parcourir les voisins du sommet courant
-        for voisin, est_voisin in enumerate(matrice_adjacence[courant]):
-            if est_voisin == 1 and voisin not in vus:
-                vus.add(voisin)  # Marquer comme visité
-                enfiler(file, voisin)  # Ajouter à la file des sommets à explorer
-
-    return res
+    else:
+        # Cas Matrice d'Adjacence (Indices)
+        file = [depart]
+        vus = {depart}
+        res = []
+        while file:
+            courant = file.pop(0)
+            res.append(courant)
+            for voisin, est_voisin in enumerate(graphe[courant]):
+                if est_voisin == 1 and voisin not in vus:
+                    vus.add(voisin)
+                    file.append(voisin)
+        return res
 
 def parcours_profondeur(matrice_adjacence, sommet_depart):
     """

@@ -27,10 +27,20 @@ def run_demo(filename):
     # 4. Exemple de parcours de propagation depuis le premier influenceur
     if influenceurs:
         depart = influenceurs[0]
-        # Trouvez l'indice de l'influenceur
         idx_depart = sommets.index(depart)
         visites = parcours_largeur(matrice, idx_depart)
         print(f"Nombre de personnes pouvant être atteintes par {depart} : {len(visites)}")
+
+    # 5. Test de propagation (Image de 0 vers 1)
+    if len(sommets) >= 2:
+        s0, s1 = sommets[0], sommets[1]
+        chemin = parcours_largeur(liste_adj, s0, cible=s1)
+        print(f"Test Propagation (Image de {s0} vers {s1}) :")
+        if chemin:
+            print(f"  Chemin trouvé : {' -> '.join(chemin)}")
+            print(f"  Temps estimé : {(len(chemin)-1)*5} minutes")
+        else:
+            print(f"  Aucun chemin direct trouvé entre {s0} et {s1}")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
